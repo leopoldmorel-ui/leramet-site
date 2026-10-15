@@ -172,3 +172,10 @@ if (bar) {
   document.querySelector('.burger')?.addEventListener('click', () => setTimeout(toggleBar, 0));
   toggleBar();
 }
+
+// Hauteur de l'en-tête (toujours affiché), utilisée par la barre d'onglets de la carte
+const setHH = () => document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
+addEventListener('scroll', setHH, { passive: true });
+addEventListener('resize', setHH);
+header.addEventListener('transitionend', setHH);
+setHH();

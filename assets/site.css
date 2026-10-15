@@ -330,3 +330,13 @@ main{background:var(--beige)}
 /* Accueil : bouton Itinéraire sous les deux autres */
 .hero .hero-way svg{width:16px;height:16px;fill:currentColor}
 .hero .actions .hero-way{flex-basis:100%;max-width:max-content;margin:0 auto}
+
+/* En-tête : toujours affiché ; dès qu'on descend, il devient plus fin et translucide */
+.site-header{transition:transform .35s ease,background .3s,padding .3s,box-shadow .3s}
+.site-header.solid{padding-top:9px;padding-bottom:9px;background:rgba(62,92,88,.86);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2)}
+.site-header.solid .brand{font-size:1.1rem}
+.site-header.solid .brand img{height:32px}
+.site-header.solid .burger{width:40px;height:40px}
+.site-header.solid .burger span:nth-child(1){top:12px}.site-header.solid .burger span:nth-child(2){top:19px}.site-header.solid .burger span:nth-child(3){top:26px}
+/* la barre d'onglets de la carte suit l'en-tête */
+.menu-nav{top:var(--hh,68px)!important;transition:top .35s ease}
