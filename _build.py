@@ -43,7 +43,7 @@ def page(file, title, desc, body, home=False):
         f'<a href="{h}"{ACTIVE if h == file else ""}>{t}</a>' for h, t in NAV[1:]
     )
     html = f"""<!doctype html><html lang="fr"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#3E5C58">
 <title>{title}</title><meta name="description" content="{desc}">
 <link rel="icon" href="assets/logo/icon-120.png"><link rel="stylesheet" href="assets/site.css?v={V}">
 <script>document.documentElement.classList.add("js");try{{if(localStorage.getItem("ramet-annonce-golf")==="fermee")document.documentElement.classList.add("announce-off")}}catch(e){{}}</script>
@@ -64,7 +64,7 @@ def page(file, title, desc, body, home=False):
 <div><h4>Le Ramet</h4><p><a href="la-carte.html">La carte</a><br><a href="sur-place-groupes.html">Sur place & groupes</a><br><a href="golf.html">Golf</a><br><a href="gites.html">Gîtes & chambres d'hôtes</a><br><a href="contact.html">Contact & accès</a></p>
 <p><a href="https://www.instagram.com/domaine.du.ramet/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=100063968103180" target="_blank" rel="noopener">Facebook</a></p></div>
 </div><div class="legal">© Le Ramet · <a href="mentions-legales.html">Mentions légales & confidentialité</a></div></footer>
-<div class="mobile-bar"><a href="tel:{TEL}">Appeler</a><a href="la-carte.html">La carte</a><a href="{MAPS}" target="_blank" rel="noopener">Itinéraire</a></div>
+<nav class="mobile-bar" aria-label="Actions rapides"><a href="tel:{TEL}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><span>Appeler</span></a><a href="la-carte.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>La carte</span></a><a href="{MAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>Itinéraire</span></a></nav>
 <script src="assets/site.js?v={V}"></script>
 </body></html>
 """
@@ -124,7 +124,7 @@ page("index.html", "Le Ramet — Pizzeria aux Gonds près de Saintes, golf indoo
      f"""<section class="hero">{ph('terrasse-pizza-batisse', alt="Une pizza devant la bâtisse en pierre du Ramet", eager=True)}
 <div class="inner"><h1 class="hero-logo"><img src="assets/logo/logo-hero-beige.png" alt="Le Ramet — gîtes & chambres d'hôtes, séminaires & restauration" width="1100" height="923"></h1>
 <p class="sub" style="color:var(--beige);letter-spacing:.18em">+ Simulateur de golf · dès décembre</p>
-<div class="actions"><a class="btn btn-gold" href="la-carte.html">Voir la carte</a><a class="btn btn-outline" href="tel:{TEL}">Commander · {TEL_TXT}</a></div></div>
+<div class="actions"><a class="btn btn-gold" href="la-carte.html">Voir la carte</a><a class="btn btn-outline" href="tel:{TEL}">Commander · {TEL_TXT}</a><a class="btn btn-outline hero-way" href="{MAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Itinéraire</a></div></div>
 <a class="scroll" href="#bienvenue">Découvrir ↓</a></section>
 
 <section class="wrap center reveal" id="bienvenue"><p class="eyebrow">Bienvenue au Ramet</p><h2>Une pizzeria locale, et un domaine qui grandit</h2>

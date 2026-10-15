@@ -158,3 +158,17 @@ document.querySelector('.announce-close')?.addEventListener('click', () => {
   try { localStorage.setItem('ramet-annonce-golf', 'fermee'); } catch (e) {}
   onScroll();
 });
+
+// Actions rapides (mobile) : sur l'accueil, la pilule n'apparaît qu'une fois la photo d'accueil passée
+const bar = document.querySelector('.mobile-bar');
+if (bar) {
+  const hero = document.querySelector('.home .hero');
+  const toggleBar = () => {
+    const menuOpen = nav && nav.classList.contains('open');
+    const pastHero = !hero || scrollY > hero.offsetHeight * 0.6;
+    bar.classList.toggle('hide', menuOpen || !pastHero);
+  };
+  addEventListener('scroll', toggleBar, { passive: true });
+  document.querySelector('.burger')?.addEventListener('click', () => setTimeout(toggleBar, 0));
+  toggleBar();
+}
