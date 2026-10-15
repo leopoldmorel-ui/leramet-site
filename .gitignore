@@ -1,0 +1,6 @@
+# Photos originales de l'iPhone : lourdes et avec position GPS, non publiées sur le site
+photos/
+# Fichiers système / temporaires
+.DS_Store
+__pycache__/
+choix-photo-*.jpg
