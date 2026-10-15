@@ -59,7 +59,7 @@ def page(file, title, desc, body, home=False):
 </main>
 <footer class="site-footer"><div class="wrap">
 <div><img src="assets/logo/logo-v-beige-520.png" alt="Le Ramet — gîtes, chambres d'hôtes, séminaires et restauration"></div>
-<div><h4>Nous trouver</h4><p>56 rue Maurice Ravel<br>17100 Les Gonds</p><p><a href="tel:{TEL}">{TEL_TXT}</a><br><a href="mailto:{MAIL}">{MAIL}</a></p></div>
+<div><h4>Nous trouver</h4><p><a href="{MAPS}" target="_blank" rel="noopener" class="addr-link">56 rue Maurice Ravel<br>17100 Les Gonds</a></p><p><a href="tel:{TEL}" class="addr-link">{TEL_TXT}</a><br><a href="mailto:{MAIL}" class="addr-link">{MAIL}</a></p></div>
 <div><h4>Pizzeria</h4><p>Lun, mar, jeu, ven<br>11h–14h · 18h–21h</p><p>Dimanche 18h–21h<br>Fermé mercredi et samedi</p></div>
 <div><h4>Le Ramet</h4><p><a href="la-carte.html">La carte</a><br><a href="sur-place-groupes.html">Sur place & groupes</a><br><a href="golf.html">Golf</a><br><a href="gites.html">Gîtes & chambres d'hôtes</a><br><a href="contact.html">Contact & accès</a></p>
 <p><a href="https://www.instagram.com/domaine.du.ramet/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=100063968103180" target="_blank" rel="noopener">Facebook</a></p></div>
@@ -89,6 +89,26 @@ GALLERY = [
 def gal(items):
     """Galerie : chaque photo s'ouvre en grand dans la visionneuse."""
     return "".join(f'<a href="{pic(i)}" data-caption="{c}"><img src="{pic(i)}" alt="{c}" loading="lazy"></a>' for i, c in items)
+
+
+# Avis Google : note relevée sur la fiche Google « PIZZA LE RAMET » (à mettre à jour de temps en temps)
+GOOGLE = {"note": "5,0", "nb": 28, "releve": "15 octobre 2026",
+          "url": "https://maps.google.com/?cid=9312144320937828134"}
+# Avis écrits affichés sur le site : uniquement avec l'accord de leur auteur.
+# Format : ("Prénom N.", "texte de l'avis", "mois année")
+AVIS = []
+
+
+def avis_section():
+    stars = '<span class="stars" aria-hidden="true">★★★★★</span>'
+    cards = "".join(
+        f'<figure class="review"><div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>'
+        f'<blockquote>« {t} »</blockquote><figcaption><span class="avatar" aria-hidden="true">{n[0]}</span>{n}<small>{d} · avis Google</small></figcaption></figure>'
+        for n, t, d in AVIS)
+    return f"""<section class="wrap tight reviews-sec reveal" id="avis"><div class="center"><p class="eyebrow">Nos avis</p><h2>Ce que disent nos clients</h2></div>
+<div class="rating-card"><div class="rating-score">{GOOGLE["note"]}</div><div>{stars}<p><strong>{GOOGLE["nb"]} avis</strong> sur Google</p></div>
+<div class="rating-actions"><a class="btn btn-green" href="{GOOGLE["url"]}" target="_blank" rel="noopener">Lire nos avis sur Google</a><a class="btn btn-outline" style="color:var(--green)" href="{GOOGLE["url"]}" target="_blank" rel="noopener">Laisser un avis</a></div></div>
+{f'<div class="reviews">{cards}</div>' if cards else ''}</section>"""
 
 
 ROAD = """<div class="road reveal">
@@ -125,8 +145,10 @@ page("index.html", "Le Ramet — Pizzeria aux Gonds près de Saintes, golf indoo
 
 <section class="wrap"><p class="eyebrow">Le Ramet grandit</p><h2>Aujourd'hui, et bientôt</h2>{ROAD}</section>
 
+{avis_section()}
+
 <section class="wrap tight center reveal"><img src="assets/logo/logo-v-vert-520.png" alt="" style="height:130px;width:auto;margin:0 auto 24px">
-<h2>Le goût local, l'esprit convivial</h2><p class="muted">Notre farine vient de la Minoterie Méchain à Courcelles, à quelques kilomètres de la pizzeria.</p><a class="more" href="ancrage-local.html">Notre ancrage local</a></section>
+<h2>Le goût local, l'esprit convivial</h2></section>
 """, home=True)
 
 # ---------------------------------------------------------------- La carte (menu v2)
