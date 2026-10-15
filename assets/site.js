@@ -7,6 +7,9 @@ document.querySelector('.burger')?.addEventListener('click', e => {
   e.currentTarget.setAttribute('aria-expanded', open);
 });
 const announce = document.querySelector('.announce');
+// hauteur réelle du bandeau, utilisée par le CSS pour que la photo d'accueil remplisse l'écran
+const setAnn = () => document.documentElement.style.setProperty('--ann', (announce && !document.documentElement.classList.contains('announce-off') ? announce.offsetHeight : 0) + 'px');
+setAnn(); addEventListener('resize', setAnn);
 const onScroll = () => {
   header.classList.toggle('solid', scrollY > 60);
   // Accueil : l'en-tête fixe démarre sous le bandeau d'annonce
@@ -151,6 +154,7 @@ document.querySelectorAll('[data-carousel]').forEach(car => {
 // Bandeau d'annonce : la croix le ferme, et il reste fermé lors des visites suivantes
 document.querySelector('.announce-close')?.addEventListener('click', () => {
   document.documentElement.classList.add('announce-off');
+  setAnn();
   try { localStorage.setItem('ramet-annonce-golf', 'fermee'); } catch (e) {}
   onScroll();
 });

@@ -219,13 +219,14 @@ details p{color:var(--muted);margin:10px 0 0}
 
 /* Accueil sur écran vertical (téléphone) : la pizza, en bas de la photo, reste entière ; texte dans le haut */
 @media(orientation:portrait){
-  .home .hero{height:calc(100svh - 38px);min-height:520px;place-items:start center}
+  .home .hero{height:calc(100svh - var(--ann,38px));min-height:520px;place-items:start center}
   .hero .ph img{object-position:45% 100%}
   .hero .ph::before{background:linear-gradient(180deg,rgba(36,58,55,.75),rgba(36,58,55,.35) 45%,rgba(36,58,55,.05) 75%)}
   .hero .inner{padding-top:clamp(96px,14vh,170px)}
   .hero .scroll{display:none}
 }
-@media(orientation:portrait) and (max-width:760px){.home .hero{height:calc(100svh - 112px)}}
+/* téléphone : on retire la hauteur réelle du bandeau (0 une fois fermé) et la barre du bas (52 px) */
+@media(orientation:portrait) and (max-width:760px){.home .hero{height:calc(100svh - var(--ann,60px) - 52px)}}
 
 /* La carte v2 : nouveautés, boissons, allergènes, menu imprimé */
 .tag.new{background:var(--gold);color:var(--white);border-color:var(--gold)}
@@ -294,3 +295,5 @@ details p{color:var(--muted);margin:10px 0 0}
 .announce-close{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:26px;height:26px;border:0;border-radius:50%;background:transparent;color:var(--white);font-size:1.15rem;line-height:1;cursor:pointer;opacity:.75;display:grid;place-items:center;padding:0}
 .announce-close:hover,.announce-close:focus-visible{opacity:1;background:rgba(255,253,248,.18)}
 .announce-off .announce{display:none}
+
+.announce-off{--ann:0px}
