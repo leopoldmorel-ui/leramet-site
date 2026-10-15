@@ -46,9 +46,9 @@ def page(file, title, desc, body, home=False):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
 <link rel="icon" href="assets/logo/icon-120.png"><link rel="stylesheet" href="assets/site.css?v={V}">
-<script>document.documentElement.classList.add("js")</script>
+<script>document.documentElement.classList.add("js");try{{if(localStorage.getItem("ramet-annonce-golf")==="fermee")document.documentElement.classList.add("announce-off")}}catch(e){{}}</script>
 </head><body{' class="home"' if home else ''}>
-<div class="announce">⛳ Un simulateur de golf ouvre début décembre au Ramet — <a href="golf.html">en savoir plus</a></div>
+<div class="announce"><span>⛳ Un simulateur de golf ouvre début décembre au Ramet — <a href="golf.html">en savoir plus</a></span><button class="announce-close" aria-label="Fermer l'annonce">×</button></div>
 <header class="site-header">
 <a class="brand" href="index.html"><img src="assets/logo/icon-120.png" alt="">Le Ramet</a>
 <button class="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span><span></span></button>

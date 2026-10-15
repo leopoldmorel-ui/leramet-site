@@ -147,3 +147,10 @@ document.querySelectorAll('[data-carousel]').forEach(car => {
   // un glisser ne doit pas ouvrir la photo en grand
   car.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopImmediatePropagation(); moved = false; } }, true);
 });
+
+// Bandeau d'annonce : la croix le ferme, et il reste fermé lors des visites suivantes
+document.querySelector('.announce-close')?.addEventListener('click', () => {
+  document.documentElement.classList.add('announce-off');
+  try { localStorage.setItem('ramet-annonce-golf', 'fermee'); } catch (e) {}
+  onScroll();
+});
