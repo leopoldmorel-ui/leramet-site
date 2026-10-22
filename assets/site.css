@@ -435,3 +435,95 @@ main{background:var(--beige)}
 .avis-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;margin-top:26px}
 .avis-links a{color:var(--green);font-weight:600;text-underline-offset:5px;text-decoration-color:var(--gold);text-decoration-thickness:2px}
 .avis-links a:hover{color:var(--gold)}
+
+/* ===== Pages intérieures : même style que l'accueil et l'ardoise ===== */
+/* bandeau photo à proportions fixes (même cadrage sur tous les écrans), fondu dans la page */
+.p-banner{position:relative;aspect-ratio:3/2;overflow:hidden;max-height:none}
+.p-banner img{width:100%;height:100%;object-fit:cover;object-position:center var(--pos,50%);filter:saturate(.95)}
+.p-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(245,241,233,.05) 0%,rgba(245,241,233,0) 45%,rgba(245,241,233,.75) 80%,var(--beige) 100%)}
+.p-head{position:relative;text-align:center;max-width:860px;margin:0 auto;padding:clamp(70px,10vw,120px) clamp(18px,5vw,40px) 10px}
+.p-banner + .p-head{margin-top:-9vw;padding-top:0}
+.p-head .k{display:block;font-family:var(--head);color:var(--gold);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem;margin:0 0 10px}
+.p-head h1{font-size:clamp(2.6rem,7vw,4.8rem);letter-spacing:.06em;margin:0;color:var(--green)}
+.p-head p{color:var(--muted);margin:14px auto 0;max-width:620px}
+.p-head .when{display:inline-block;margin-top:18px;font-family:var(--head);color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;border-bottom:1px dashed var(--gold);padding-bottom:3px}
+.sec-title{text-align:center;font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 30px}
+/* photos façon polaroïd partout */
+.row .ph{border:8px solid #FFFDF8;border-radius:3px;box-shadow:0 16px 36px rgba(36,58,55,.22);transition:transform .35s ease}
+.row:not(.flip) .ph{transform:rotate(-1.2deg)}.row.flip .ph{transform:rotate(1deg)}
+.row .ph:hover{transform:rotate(0)}
+.polaroid{background:#FFFDF8;padding:10px;box-shadow:0 16px 36px rgba(36,58,55,.2);transform:rotate(.8deg)}
+/* panneau ardoise : lignes de menu avec pointillés */
+.slate{max-width:780px;margin:0 auto;background:#2E4441;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:4px 4px;color:#EFE9DD;border-radius:6px;padding:12px;transform:rotate(-.5deg);box-shadow:0 18px 40px rgba(36,58,55,.25)}
+.slate .frame{border:2px dashed rgba(182,162,107,.8);border-radius:4px;padding:30px clamp(18px,4vw,40px)}
+.slate h2{color:#EFE9DD;text-align:center;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:.06em;margin:0 0 8px}
+.slate .intro{text-align:center;color:rgba(239,233,221,.7);margin:0 0 18px;font-size:.95rem}
+.slate .ln{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:#EFE9DD;padding:14px 0 4px}
+.slate .ln + p,.slate p.d{margin:0;padding:0 0 12px;color:rgba(239,233,221,.65);font-size:.9rem;border-bottom:1px dashed rgba(239,233,221,.18)}
+.slate .row-last{border-bottom:0!important}
+.slate .nm{font-family:var(--head);font-size:clamp(1rem,2.4vw,1.2rem);letter-spacing:.04em}
+.slate .dots{flex:1;border-bottom:2px dotted rgba(182,162,107,.55);transform:translateY(-4px);min-width:16px}
+.slate .when{font-family:var(--head);color:var(--gold);white-space:nowrap}
+.slate a.ln:hover .nm{color:var(--gold)}
+.slate .open{color:#9FD3A6}
+.slate .foot{text-align:center;margin:22px 0 0}
+.slate .foot a{color:var(--gold);font-weight:600;text-underline-offset:5px}
+.slate form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.slate input{min-width:240px;min-height:48px;border-radius:999px;border:1px solid rgba(239,233,221,.35);background:transparent;color:#EFE9DD;padding:0 20px;font:inherit}
+.slate input::placeholder{color:rgba(239,233,221,.55)}
+/* étapes numérotées sobres */
+.num-steps{list-style:none;counter-reset:n;padding:0;margin:18px 0 0}
+.num-steps li{counter-increment:n;display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px dashed var(--line)}
+.num-steps li::before{content:counter(n);font-family:var(--head);color:var(--gold);font-size:1.5rem;min-width:22px}
+/* liens soulignés (à la place des boutons) */
+.u-links{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px}
+.u-links.c{justify-content:center}
+.u-links a{color:var(--green);font-weight:600;text-underline-offset:5px;text-decoration-color:var(--gold);text-decoration-thickness:2px}
+.u-links a:hover{color:var(--gold)}
+/* questions fréquentes sans cartes */
+.faq{max-width:760px;margin:0 auto}
+.faq details{background:none;border:0;border-bottom:1px dashed var(--line);border-radius:0;padding:16px 0;margin:0}
+.faq summary{font-family:var(--head);font-size:1.12rem;letter-spacing:.03em}
+/* valeurs façon tampon */
+.stamp{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;font-family:var(--head);color:var(--green);letter-spacing:.12em;text-transform:uppercase;font-size:clamp(.95rem,2.2vw,1.15rem);text-align:center}
+.stamp span+span::before{content:"·";color:var(--gold);margin-right:18px}
+/* page sombre (golf) : le panneau ardoise prend toute la page */
+.page-slate{background:#2E4441;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:4px 4px;color:#EFE9DD}
+.page-slate .p-head h1{color:#EFE9DD}.page-slate .p-head p{color:rgba(239,233,221,.75)}
+.page-slate .sec-title{color:#EFE9DD}
+.page-slate .slate{background:rgba(0,0,0,.14);box-shadow:none}
+.page-slate .faq details{border-bottom-color:rgba(239,233,221,.18)}
+.page-slate .faq summary{color:#EFE9DD}.page-slate .faq details p{color:rgba(239,233,221,.7)}
+.page-slate .row p,.page-slate .num-steps li{color:rgba(239,233,221,.8)}
+.page-slate .row h2{color:#EFE9DD}
+.page-slate .num-steps li{border-bottom-color:rgba(239,233,221,.18)}
+.page-slate .row .ph{border-color:#EFE9DD;box-shadow:0 16px 36px rgba(0,0,0,.35)}
+.page-slate .u-links a{color:#EFE9DD}
+/* horaires en lignes */
+.hours-lines .ln{padding:10px 0}
+.hours-lines .closed .nm,.hours-lines .closed .when{opacity:.5}
+.hours-lines .today .nm{color:var(--gold)}
+@media(max-width:760px){.slate{transform:none}.slate .ln{flex-wrap:wrap;column-gap:10px}.slate .dots{min-width:10px}.slate .when{margin-left:auto}}
+@media(max-width:760px){.stamp{flex-direction:column;align-items:center;gap:10px}.stamp span+span::before{content:none}.stamp span+span{border-top:1px dashed var(--gold);padding-top:10px;min-width:180px}}
+
+/* Le Ramet grandit en carrousel coulissant (polaroïds) */
+.g-head{display:flex;align-items:center;justify-content:center;gap:20px;position:relative;margin-bottom:10px}
+.g-head .g-title{margin:0}
+.g-head .car-nav{position:absolute;right:0}
+.g-pola.g-car{display:flex;gap:clamp(20px,3vw,34px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;max-width:none;margin:0 calc(-1 * clamp(16px,4vw,36px));padding:30px clamp(16px,4vw,36px) 40px;scrollbar-width:none;cursor:grab}
+.g-car::-webkit-scrollbar{display:none}
+.g-car.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.g-car a{flex:0 0 clamp(250px,30%,330px);scroll-snap-align:center}
+.g-car a img{pointer-events:none;-webkit-user-drag:none;user-select:none}
+.g-car{justify-content:safe center}
+@media(max-width:760px){.g-head .car-nav{display:none}.g-car a{flex-basis:76%}.g-pola.g-car a:nth-child(2){transform:rotate(1.2deg)}}
+
+/* La pizzeria et Sur place & groupes : en-tête transparent posé sur la photo, comme sur l'accueil */
+.overlay .site-header{position:fixed;left:0;right:0;background:transparent;box-shadow:none}
+.overlay .site-header.solid,.overlay .site-header.open{background:rgba(62,92,88,.86);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.overlay .announce{position:relative;z-index:51}
+/* voile sombre en haut de la photo pour que le logo et le menu restent lisibles */
+.overlay .c-banner::before,.overlay .p-banner::before{content:"";position:absolute;left:0;right:0;top:0;height:min(220px,45%);background:linear-gradient(180deg,rgba(36,58,55,.6),rgba(36,58,55,0));z-index:1}
+/* titre texte dans le grand visuel (pages construites comme l'accueil) */
+.hero .hero-title{color:var(--beige);font-size:clamp(2.8rem,9vw,6.4rem);letter-spacing:.05em;line-height:1;margin:6px 0 22px;text-shadow:0 4px 30px rgba(20,32,30,.6)}
+.home .hero .ph img[src*="salle-tables-vertes"]{object-position:center 62%}

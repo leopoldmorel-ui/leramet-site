@@ -13,7 +13,7 @@ setAnn(); addEventListener('resize', setAnn);
 const onScroll = () => {
   header.classList.toggle('solid', scrollY > 60);
   // Accueil : l'en-tête fixe démarre sous le bandeau d'annonce
-  if (document.body.classList.contains('home') && announce) header.style.top = Math.max(0, announce.offsetHeight - scrollY) + 'px';
+  if ((document.body.classList.contains('home') || document.body.classList.contains('overlay')) && announce) header.style.top = Math.max(0, announce.offsetHeight - scrollY) + 'px';
 };
 addEventListener('resize', onScroll);
 addEventListener('scroll', onScroll); onScroll();
@@ -55,7 +55,7 @@ if (tabs.length) {
 }
 
 // Contact : surligner le jour actuel dans les horaires
-const today = document.querySelector(`.hours tr[data-d="${new Date().getDay()}"]`);
+const today = document.querySelector(`.hours tr[data-d="${new Date().getDay()}"], .hours-lines [data-day="${new Date().getDay()}"]`);
 today?.classList.add('today');
 
 // Galerie : clic sur une photo -> visionneuse plein écran (flèches, clavier, glisser au doigt)
@@ -116,6 +116,9 @@ document.querySelectorAll('[data-carousel]').forEach(car => {
     if (btns.length < 2) return;
     btns[0].disabled = car.scrollLeft <= 4;
     btns[1].disabled = car.scrollLeft + car.clientWidth >= car.scrollWidth - 4;
+    // tout tient à l'écran : pas besoin de flèches
+    const navEl = btns[0].closest('.car-nav');
+    if (navEl) navEl.style.visibility = (btns[0].disabled && btns[1].disabled) ? 'hidden' : '';
   };
   car.addEventListener('scroll', update, { passive: true }); addEventListener('resize', update);
   car.querySelectorAll('img').forEach(i => i.addEventListener('load', update));
