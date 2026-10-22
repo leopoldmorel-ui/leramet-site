@@ -340,3 +340,53 @@ main{background:var(--beige)}
 .site-header.solid .burger span:nth-child(1){top:12px}.site-header.solid .burger span:nth-child(2){top:19px}.site-header.solid .burger span:nth-child(3){top:26px}
 /* la barre d'onglets de la carte suit l'en-tête */
 .menu-nav{top:var(--hh,68px)!important;transition:top .35s ease}
+
+/* ===== Page La pizzeria : style « ardoise du jour » (fond vert ardoise) ===== */
+.carte-c{background:#2E4441;color:#EFE9DD;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:4px 4px}
+.carte-c .in{max-width:1080px;margin:0 auto;padding:clamp(48px,8vw,96px) clamp(18px,5vw,40px) 96px}
+.carte-c h2{color:var(--gold);font-size:1.5rem;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(239,233,221,.25);padding-bottom:10px;margin:0 0 18px}
+.carte-c [id]{scroll-margin-top:84px}
+.c-head{text-align:center}
+.c-head .k,.c-moment .k{font-family:var(--head);color:var(--gold);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem;margin:0 0 10px;display:block}
+.c-head h1{color:#EFE9DD;font-size:clamp(3rem,9vw,5.6rem);letter-spacing:.1em;margin:0}
+.c-head p{color:rgba(239,233,221,.75);margin:12px 0 0}
+.c-head a{color:var(--gold)}
+.c-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;margin-top:26px;font-family:var(--head);letter-spacing:.12em;text-transform:uppercase;font-size:.76rem}
+.c-nav a{color:rgba(239,233,221,.8);text-decoration:none;border-bottom:1px dashed rgba(182,162,107,.6);padding-bottom:2px}
+.c-nav a:hover{color:var(--gold)}
+.c-moment{margin:46px auto 10px;max-width:720px;border:2px dashed rgba(182,162,107,.8);border-radius:6px;padding:30px 34px;text-align:center;transform:rotate(-.6deg)}
+.c-moment h2{color:#EFE9DD;font-size:clamp(2rem,5vw,3rem);margin:8px 0 6px;border:0;padding:0;letter-spacing:.06em;text-transform:none}
+.c-moment p{margin:0;color:rgba(239,233,221,.8)}
+.c-moment .pr{display:block;margin-top:14px;font-family:var(--head);font-size:1.8rem;color:var(--gold)}
+.c-moment small{display:block;margin-top:6px;color:rgba(239,233,221,.55);font-style:italic}
+.c-cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);margin-top:56px}
+.c-cols h2.mt{margin-top:34px}
+.carte-c ul{list-style:none;margin:0;padding:0}
+.carte-c li{padding:12px 0;border-bottom:1px dashed rgba(239,233,221,.18)}
+.carte-c .ln{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.carte-c .nm{font-family:var(--head);font-size:1.15rem;letter-spacing:.05em;color:#EFE9DD}
+.carte-c ul.sm .nm{font-family:var(--body);font-size:.95rem;letter-spacing:0}
+.carte-c .pr{font-family:var(--head);color:var(--gold);white-space:nowrap}
+.carte-c .nv{color:var(--gold);font-size:.75rem;font-style:italic;margin-left:6px;font-family:var(--body)}
+.carte-c li p{margin:4px 0 0;color:rgba(239,233,221,.68);font-size:.9rem}
+.carte-c .supp{margin:14px 0 0;color:rgba(239,233,221,.6);font-size:.88rem}
+.c-sec{margin-top:72px}
+.carte-c .gallery-head{align-items:center;border-bottom:1px solid rgba(239,233,221,.25);margin-bottom:0}
+.carte-c .gallery-head h2{border:0;margin:0;padding-bottom:10px}
+.carte-c .car-btn{background:transparent;color:#EFE9DD;border-color:rgba(239,233,221,.4);box-shadow:none}
+.carte-c .car-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.carte-c .car-btn:disabled{background:transparent;color:#EFE9DD}
+.carte-c .carousel a{border:6px solid #EFE9DD;border-radius:3px;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.carte-c .carousel a:nth-child(odd){transform:rotate(-1.2deg)}.carte-c .carousel a:nth-child(even){transform:rotate(1deg)}
+.carte-c .carousel a:hover{transform:rotate(0) translateY(-4px)}
+.carte-c .menu-sheets .sheet{border:6px solid #EFE9DD;border-radius:3px;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.c-foot{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+.c-foot .btn-outline{color:#EFE9DD;border-color:rgba(239,233,221,.5)}
+.carte-c .table-scroll{border-color:rgba(239,233,221,.25);border-radius:6px;margin-top:16px}
+.carte-c .allergens{background:transparent;min-width:640px}
+.carte-c .allergens th{background:rgba(0,0,0,.2);color:var(--gold)}
+.carte-c .allergens td{color:#EFE9DD;border-top:1px dashed rgba(239,233,221,.18)}
+.carte-c .allergens td:first-child{color:#EFE9DD}
+.carte-c .allergens tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
+.carte-c .note{background:rgba(0,0,0,.18);color:rgba(239,233,221,.75);border-left-color:var(--gold)}
+@media(max-width:760px){.c-cols{grid-template-columns:1fr}.c-moment{transform:none}}

@@ -191,43 +191,51 @@ drinks_html = "".join(
     f'<h3 class="drinks-title">{g}</h3><div class="drinks">' + "".join(f"<div><span>{n}</span><b>{p}</b></div>" for n, p in items) + "</div>"
     for g, items in DRINKS.items())
 
+# Pizza du moment, dessert et suppléments (mettre à jour ici chaque semaine)
+MOMENT = ("La Diavola", "12 €", "Pulpe de tomate, mozzarella, spianata piccante, basilic, origan, olive, huile d'olive")
+DESSERT = ("Glaces L'Angélys", "4 €", "Chocolat noisette, mangue, framboise, vanille, cacahuète")
+SUPP = "Œuf 1 € · Fromage / viande 1,5 € · Légume 1 €"
+
+
+def ardoise(items):
+    """Liste de pizzas façon ardoise : nom + prix, ingrédients dessous."""
+    return "<ul>" + "".join(
+        f'<li><div class="ln"><span class="nm">{n}{"<span class=nv>nouveau</span>" if t else ""}</span><span class="pr">{p}</span></div><p>{d.rstrip(".")}</p></li>'
+        for n, p, d, i, t in items) + "</ul>"
+
+
+def ardoise_drinks(groups):
+    return "".join(f'<h2>{g}</h2><ul class="sm">' + "".join(
+        f'<li><div class="ln"><span class="nm">{n}</span><span class="pr">{p}</span></div></li>' for n, p in DRINKS[g]) + "</ul>"
+        for g in groups)
+
+
 page("la-carte.html", "La pizzeria — Pizza du Ramet, Les Gonds",
      "La carte de Pizza du Ramet : pizzas base tomate, base crème, pizza du moment, boissons et allergènes. À emporter ou sur place aux Gonds.",
-     page_hero("Pizza du Ramet · à emporter ou sur place", "La pizzeria",
-               f"Lun, mar, jeu, ven 11h–14h · 18h–21h · dimanche 18h–21h. Pour commander : <a href=\"tel:{TEL}\" style=\"color:var(--gold)\">{TEL_TXT}</a>.",
-               "comptoir-four", "Le comptoir de la pizzeria, le four et l'ancien four à pain")
-     + """<nav class="menu-nav" aria-label="Rubriques de la carte"><div class="in"><a href="#tomate">Base tomate</a><a href="#creme">Base crème</a><a href="#moment">Du moment & desserts</a><a href="#boissons">Boissons</a><a href="#galerie">En images</a><a href="#menu-imprime">Le menu</a><a href="#allergenes">Allergènes</a></div></nav>
-<div class="wrap" data-gallery>
-<section class="menu-sec" id="tomate"><p class="eyebrow">Nos pizzas</p><h2>Base tomate</h2><div class="menu-grid">"""
-     + "".join(dish(*d) for d in TOMATE) + """</div></section>
-<section class="menu-sec" id="creme"><p class="eyebrow">Nos pizzas</p><h2>Base crème</h2><div class="menu-grid">"""
-     + "".join(dish(*d) for d in CREME) + """</div></section>
-<section class="menu-sec" id="moment"><p class="eyebrow">Pizza du moment & desserts</p><h2>Du moment & desserts</h2><div class="menu-grid">"""
-     + dish("Pizza du moment : La Diavola", "12 €", "Pulpe de tomate, mozzarella, spianata piccante, basilic, origan, olive, huile d'olive. Nouvelle recette chaque semaine.", None, "Cette semaine")
-     + dish("Glaces L'Angélys", "4 €", "Chocolat noisette, mangue, framboise, vanille, cacahuète. Les glaces artisanales de Charente-Maritime.", None, "Desserts")
-     + dish("Ingrédient supplémentaire", "", "Œuf : 1 € · Fromage / viande : 1,5 € · Légume : 1 €")
-     + """</div></section>
-<section class="menu-sec" id="boissons"><p class="eyebrow">Pour accompagner</p><h2>Boissons</h2><div class="drinks-grid">"""
-     + drinks_html
-     + f"""</div></section>
-<section class="menu-sec" id="galerie"><div class="gallery-head"><div><p class="eyebrow">En images</p><h2>Côté pizzeria</h2></div>
+     f"""<div class="carte-c" data-gallery><div class="in">
+<div class="c-head"><p class="k">Pizza du Ramet · à emporter ou sur place</p><h1>À l'ardoise</h1>
+<p>Lun, mar, jeu, ven 11h–14h · 18h–21h · dimanche 18h–21h · commandes au <a href="tel:{TEL}">{TEL_TXT}</a></p>
+<nav class="c-nav" aria-label="Rubriques de la carte"><a href="#tomate">Base tomate</a><a href="#creme">Base crème</a><a href="#boissons">Boissons</a><a href="#galerie">En images</a><a href="#menu-imprime">Le menu</a><a href="#allergenes">Allergènes</a></nav></div>
+<div class="c-moment" id="moment"><span class="k">Pizza du moment</span><h2>{MOMENT[0]}</h2><p>{MOMENT[2]}</p><span class="pr">{MOMENT[1]}</span><small>Nouvelle recette chaque semaine</small></div>
+<div class="c-cols"><div id="tomate"><h2>Base tomate</h2>{ardoise(TOMATE)}</div><div id="creme"><h2>Base crème</h2>{ardoise(CREME)}
+<h2 class="mt">Dessert</h2><ul><li><div class="ln"><span class="nm">{DESSERT[0]}</span><span class="pr">{DESSERT[1]}</span></div><p>{DESSERT[2]}</p></li></ul>
+<p class="supp">Ingrédient supplémentaire : {SUPP}</p></div></div>
+<div class="c-cols" id="boissons"><div>{ardoise_drinks(["Vins", "Bières"])}</div><div>{ardoise_drinks(["Sodas"])}</div></div>
+<section class="c-sec" id="galerie"><div class="gallery-head"><h2>En images</h2>
 <div class="car-nav"><button class="car-btn" data-dir="-1" aria-label="Photos précédentes">‹</button><button class="car-btn" data-dir="1" aria-label="Photos suivantes">›</button></div></div>
 <div class="carousel" data-gallery data-carousel tabindex="0" aria-label="Photos de la pizzeria, faites glisser">{gal(GALLERY)}</div></section>
-<section class="menu-sec" id="menu-imprime"><p class="eyebrow">À consulter ou télécharger</p><h2>Le menu en images</h2>
+<section class="c-sec" id="menu-imprime"><h2>Le menu en images</h2>
 <div class="menu-sheets">
 <a class="sheet" href="img/menu-ramet-1.jpg" data-caption="Le menu — pizzas et boissons"><img src="img/menu-ramet-1.jpg" alt="Menu Pizza du Ramet : pizzas base tomate, base crème, pizza du moment et boissons" loading="lazy"></a>
 <a class="sheet" href="img/menu-ramet-2.jpg" data-caption="Le menu — horaires, allergènes et contact"><img src="img/menu-ramet-2.jpg" alt="Menu Pizza du Ramet : horaires, informations allergènes et contact" loading="lazy"></a>
 </div>
-<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Commander par téléphone</a><a class="btn btn-outline" style="color:var(--green)" href="img/menu-ramet-1.jpg" download="menu-pizza-du-ramet.jpg">Télécharger le menu</a><a class="btn btn-outline" href="contact.html" style="color:var(--green)">Horaires & accès</a></div>
-</section>
-<section class="menu-sec" id="allergenes"><p class="eyebrow">Informations</p><h2>Allergènes</h2>
-<p class="muted">Tableau indicatif des allergènes présents dans nos recettes. Traces possibles selon approvisionnements.</p>
-<div class="table-scroll"><table class="allergens"><thead><tr><th>Pizza</th><th>Gluten</th><th>Lait</th><th>Poisson</th><th>Fruits à coque</th><th>Sulfites</th></tr></thead><tbody>"""
-     + allergen_rows
-     + """</tbody></table></div>
+<div class="c-foot"><a class="btn btn-gold" href="tel:{TEL}">Commander · {TEL_TXT}</a><a class="btn btn-outline" href="img/menu-ramet-1.jpg" download="menu-pizza-du-ramet.jpg">Télécharger le menu</a></div></section>
+<section class="c-sec" id="allergenes"><h2>Allergènes</h2>
+<p class="supp">Tableau indicatif des allergènes présents dans nos recettes. Traces possibles selon approvisionnements.</p>
+<div class="table-scroll"><table class="allergens"><thead><tr><th>Pizza</th><th>Gluten</th><th>Lait</th><th>Poisson</th><th>Fruits à coque</th><th>Sulfites</th></tr></thead><tbody>{allergen_rows}</tbody></table></div>
 <div class="note"><strong>Remarques :</strong> supplément œuf : allergène œuf. Supplément fromage / viande : lait si fromage, sulfites possibles si charcuterie. Glaces : certains parfums contiennent des fruits à coque (chocolat noisette) ou de l'arachide (cacahuète). Pour toute allergie ou intolérance, merci de nous consulter avant de commander.</div>
 </section>
-</div>""")
+</div></div>""")
 
 # ---------------------------------------------------------------- Sur place & groupes
 page("sur-place-groupes.html", "Sur place, entreprises & groupes — Pizza du Ramet",
