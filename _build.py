@@ -105,9 +105,9 @@ def avis_section():
         f'<figure class="review"><div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>'
         f'<blockquote>« {t} »</blockquote><figcaption><span class="avatar" aria-hidden="true">{n[0]}</span>{n}<small>{d} · avis Google</small></figcaption></figure>'
         for n, t, d in AVIS)
-    return f"""<section class="wrap tight reviews-sec reveal" id="avis"><div class="center"><p class="eyebrow">Nos avis</p><h2>Ce que disent nos clients</h2></div>
-<div class="rating-card"><div class="rating-score">{GOOGLE["note"]}</div><div>{stars}<p><strong>{GOOGLE["nb"]} avis</strong> sur Google</p></div>
-<div class="rating-actions"><a class="btn btn-green" href="{GOOGLE["url"]}" target="_blank" rel="noopener">Lire nos avis sur Google</a><a class="btn btn-outline" style="color:var(--green)" href="{GOOGLE["url"]}" target="_blank" rel="noopener">Laisser un avis</a></div></div>
+    return f"""<section class="wrap tight reviews-sec reveal" id="avis"><h2 class="g-title">Ce que disent nos clients</h2>
+<div class="avis-note"><div class="rating-score">{GOOGLE["note"]}</div>{stars}<p><strong>{GOOGLE["nb"]} avis</strong> sur Google</p></div>
+<div class="avis-links"><a href="{GOOGLE["url"]}" target="_blank" rel="noopener">Lire nos avis sur Google</a><a href="{GOOGLE["url"]}" target="_blank" rel="noopener">Laisser un avis</a></div>
 {f'<div class="reviews">{cards}</div>' if cards else ''}</section>"""
 
 
@@ -143,7 +143,12 @@ page("index.html", "Le Ramet — Pizzeria aux Gonds près de Saintes, golf indoo
 <ul class="ticks"><li>Parcours virtuels & practice</li><li>Soirées entre amis, anniversaires</li><li>Team building pour les entreprises</li><li>Formule golf + pizza</li></ul>
 <a class="btn btn-gold" href="golf.html">Découvrir le simulateur</a></div>{ph(label="Visuel à venir : le simulateur de golf")}</div></section>
 
-<section class="wrap"><p class="eyebrow">Le Ramet grandit</p><h2>Aujourd'hui, et bientôt</h2>{ROAD}</section>
+<section class="wrap"><h2 class="g-title">Le Ramet grandit</h2>
+<div class="g-pola reveal">
+<a href="la-carte.html"><div class="ph"><img src="{pic('enfournement')}" alt="La pizzeria" loading="lazy"></div><span class="when">Ouverte</span><span class="nm">La pizzeria</span></a>
+<a href="golf.html"><div class="ph" data-label="Photo du golf à venir"></div><span class="when">Décembre 2026</span><span class="nm">Le simulateur de golf</span></a>
+<a href="gites.html"><div class="ph"><img src="{pic('facade-longere')}" alt="La longère du Ramet" loading="lazy"></div><span class="when">Été 2027</span><span class="nm">Les gîtes &amp; chambres d'hôtes</span></a>
+</div></section>
 
 {avis_section()}
 
@@ -212,10 +217,9 @@ def ardoise_drinks(groups):
 
 page("la-carte.html", "La pizzeria — Pizza du Ramet, Les Gonds",
      "La carte de Pizza du Ramet : pizzas base tomate, base crème, pizza du moment, boissons et allergènes. À emporter ou sur place aux Gonds.",
-     f"""<div class="carte-c" data-gallery><div class="in">
+     f"""<div class="carte-c" data-gallery><div class="c-banner"><img src="{pic('comptoir-four')}" alt="Le comptoir de la pizzeria, le four et l'ancien four à pain" fetchpriority="high"></div><div class="in">
 <div class="c-head"><p class="k">Pizza du Ramet · à emporter ou sur place</p><h1>À l'ardoise</h1>
-<p>Lun, mar, jeu, ven 11h–14h · 18h–21h · dimanche 18h–21h · commandes au <a href="tel:{TEL}">{TEL_TXT}</a></p>
-<nav class="c-nav" aria-label="Rubriques de la carte"><a href="#tomate">Base tomate</a><a href="#creme">Base crème</a><a href="#boissons">Boissons</a><a href="#galerie">En images</a><a href="#menu-imprime">Le menu</a><a href="#allergenes">Allergènes</a></nav></div>
+<p>Lun, mar, jeu, ven 11h–14h · 18h–21h · dimanche 18h–21h · commandes au <a href="tel:{TEL}">{TEL_TXT}</a></p></div>
 <div class="c-moment" id="moment"><span class="k">Pizza du moment</span><h2>{MOMENT[0]}</h2><p>{MOMENT[2]}</p><span class="pr">{MOMENT[1]}</span><small>Nouvelle recette chaque semaine</small></div>
 <div class="c-cols"><div id="tomate"><h2>Base tomate</h2>{ardoise(TOMATE)}</div><div id="creme"><h2>Base crème</h2>{ardoise(CREME)}
 <h2 class="mt">Dessert</h2><ul><li><div class="ln"><span class="nm">{DESSERT[0]}</span><span class="pr">{DESSERT[1]}</span></div><p>{DESSERT[2]}</p></li></ul>

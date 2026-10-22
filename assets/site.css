@@ -390,3 +390,48 @@ main{background:var(--beige)}
 .carte-c .allergens tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
 .carte-c .note{background:rgba(0,0,0,.18);color:rgba(239,233,221,.75);border-left-color:var(--gold)}
 @media(max-width:760px){.c-cols{grid-template-columns:1fr}.c-moment{transform:none}}
+/* Ardoise : bandeau photo du comptoir, fondu dans le vert ardoise */
+/* proportions fixes (3:2) : la photo est cadrée exactement pareil sur tous les écrans */
+.c-banner{position:relative;aspect-ratio:3/2;overflow:hidden}
+.c-banner img{width:100%;height:100%;object-fit:cover;object-position:center 62%;filter:saturate(.92)}
+.c-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(46,68,65,.18) 0%,rgba(46,68,65,.08) 45%,rgba(46,68,65,.7) 78%,#2E4441 100%)}
+.c-banner + .in{position:relative;margin-top:-9vw;padding-top:0}
+.c-banner + .in .c-head h1{text-shadow:0 4px 30px rgba(20,32,30,.6)}
+.c-banner + .in .c-head .k{text-shadow:0 2px 12px rgba(20,32,30,.8)}
+
+/* Page La pizzeria (ardoise) uniquement : pilule d'actions rapides en crème */
+@media(max-width:760px){
+  body:has(.carte-c) .mobile-bar{background:rgba(250,247,240,.92);border-color:rgba(62,92,88,.18);box-shadow:0 12px 30px rgba(20,35,33,.22)}
+  body:has(.carte-c) .mobile-bar a{color:var(--green)}
+  body:has(.carte-c) .mobile-bar a+a::before{background:rgba(62,92,88,.2)}
+  body:has(.carte-c) .mobile-bar a:active,body:has(.carte-c) .mobile-bar a:focus-visible{background:rgba(62,92,88,.08)}
+}
+
+/* Accueil : photos façon polaroïd (cadre clair, légèrement penché), comme sur la page La pizzeria */
+.home .row .ph,.home .band .ph{border:8px solid #FFFDF8;border-radius:3px;box-shadow:0 16px 36px rgba(36,58,55,.22);transition:transform .35s ease}
+.home .band .ph{border-color:#EFE9DD;box-shadow:0 16px 36px rgba(0,0,0,.3)}
+.home .row:not(.flip) .ph{transform:rotate(-1.2deg)}
+.home .row.flip .ph{transform:rotate(1deg)}
+.home .band .ph{transform:rotate(-.8deg)}
+.home .row .ph:hover,.home .band .ph:hover{transform:rotate(0)}
+
+/* Accueil · Le Ramet grandit : trois polaroïds */
+.g-title{text-align:center;font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 34px}
+.g-pola{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,34px);max-width:980px;margin:0 auto}
+.g-pola a{display:block;text-decoration:none;background:#FFFDF8;padding:10px 10px 18px;box-shadow:0 16px 34px rgba(36,58,55,.2);transform:rotate(-1.6deg);transition:transform .3s}
+.g-pola a:nth-child(2){transform:rotate(1.2deg) translateY(14px)}.g-pola a:nth-child(3){transform:rotate(-.6deg)}
+.g-pola a:hover{transform:rotate(0) translateY(-4px)}
+.g-pola .ph{min-height:0;aspect-ratio:4/5;border-radius:0}
+.g-pola .ph::after{font-size:.62rem}
+.g-pola .when{display:block;font-family:var(--head);color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;margin-top:14px;text-align:center}
+.g-pola .nm{display:block;font-family:var(--head);color:var(--green);font-size:1.15rem;text-align:center;margin-top:4px}
+@media(max-width:760px){.g-pola{grid-template-columns:1fr;max-width:340px}.g-pola a:nth-child(2){transform:rotate(1.2deg)}}
+
+/* Accueil · Nos avis : la note sur une carte façon polaroïd, liens soulignés */
+.avis-note{width:max-content;max-width:100%;margin:0 auto;background:#FFFDF8;padding:26px 46px 22px;text-align:center;box-shadow:0 16px 34px rgba(36,58,55,.18);transform:rotate(-1deg)}
+.avis-note .rating-score{font-size:clamp(3.4rem,8vw,4.6rem)}
+.avis-note .stars{display:block;margin:8px 0 4px}
+.avis-note p{margin:0;color:var(--muted)}.avis-note p strong{color:var(--ink)}
+.avis-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;margin-top:26px}
+.avis-links a{color:var(--green);font-weight:600;text-underline-offset:5px;text-decoration-color:var(--gold);text-decoration-thickness:2px}
+.avis-links a:hover{color:var(--gold)}
