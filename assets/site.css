@@ -527,3 +527,12 @@ main{background:var(--beige)}
 /* titre texte dans le grand visuel (pages construites comme l'accueil) */
 .hero .hero-title{color:var(--beige);font-size:clamp(2.8rem,9vw,6.4rem);letter-spacing:.05em;line-height:1;margin:6px 0 22px;text-shadow:0 4px 30px rgba(20,32,30,.6)}
 .home .hero .ph img[src*="salle-tables-vertes"]{object-position:center 62%}
+/* La pizzeria : grand visuel comme l'accueil, puis l'ardoise */
+.home .hero .ph img[src*="comptoir-four"]{object-position:center 62%}
+.home .hero + .carte-c .in{padding-top:clamp(56px,9vw,100px)}
+.hero:has(img[src*="comptoir-four"]),.hero:has(img[src*="salle-tables-vertes"]){place-items:center!important}
+.hero:has(img[src*="comptoir-four"]) .inner,.hero:has(img[src*="salle-tables-vertes"]) .inner{padding-top:0!important}
+.c-hours{color:rgba(239,233,221,.75)!important;line-height:1.9}
+.c-hours b{color:var(--gold);font-weight:600}
+.ph img[src*="terrasse-soiree-clients"]{object-position:center 55%}
+.row .ph img[src*="pizza-burrata-terrasse"]{object-position:center 45%}

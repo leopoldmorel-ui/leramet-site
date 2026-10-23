@@ -218,9 +218,11 @@ def ardoise_drinks(groups):
 
 page("la-carte.html", "La pizzeria — Pizza du Ramet, Les Gonds",
      "La carte de Pizza du Ramet : pizzas base tomate, base crème, pizza du moment, boissons et allergènes. À emporter ou sur place aux Gonds.",
-     f"""<div class="carte-c" data-gallery><div class="c-banner"><img src="{pic('comptoir-four')}" alt="Le comptoir de la pizzeria, le four et l'ancien four à pain" fetchpriority="high"></div><div class="in">
-<div class="c-head"><p class="k">Pizza du Ramet · à emporter ou sur place</p><h1>À l'ardoise</h1>
-<p>Lun, mar, jeu, ven 11h–14h · 18h–21h · dimanche 18h–21h · commandes au <a href="tel:{TEL}">{TEL_TXT}</a></p></div>
+     f"""<section class="hero">{ph('comptoir-four', alt="Le comptoir de la pizzeria, le four et l'ancien four à pain", eager=True)}
+<div class="inner"><p class="sub">Pizza du Ramet · à emporter ou sur place</p><h1 class="hero-title">La pizzeria</h1>
+<div class="actions"><a class="btn btn-gold" href="#moment">Voir la carte</a><a class="btn btn-outline" href="tel:{TEL}">Commander · {TEL_TXT}</a></div></div></section>
+<div class="carte-c" data-gallery><div class="in">
+<div class="c-head"><h1>À l'ardoise</h1><p class="c-hours">Lundi, mardi, jeudi, vendredi · <b>11h – 14h</b> & <b>18h – 21h</b><br>Dimanche · <b>18h – 21h</b></p></div>
 <div class="c-moment" id="moment"><span class="k">Pizza du moment</span><h2>{MOMENT[0]}</h2><p>{MOMENT[2]}</p><span class="pr">{MOMENT[1]}</span><small>Nouvelle recette chaque semaine</small></div>
 <div class="c-cols"><div id="tomate"><h2>Base tomate</h2>{ardoise(TOMATE)}</div><div id="creme"><h2>Base crème</h2>{ardoise(CREME)}
 <h2 class="mt">Dessert</h2><ul><li><div class="ln"><span class="nm">{DESSERT[0]}</span><span class="pr">{DESSERT[1]}</span></div><p>{DESSERT[2]}</p></li></ul>
@@ -240,7 +242,7 @@ page("la-carte.html", "La pizzeria — Pizza du Ramet, Les Gonds",
 <div class="table-scroll"><table class="allergens"><thead><tr><th>Pizza</th><th>Gluten</th><th>Lait</th><th>Poisson</th><th>Fruits à coque</th><th>Sulfites</th></tr></thead><tbody>{allergen_rows}</tbody></table></div>
 <div class="note"><strong>Remarques :</strong> supplément œuf : allergène œuf. Supplément fromage / viande : lait si fromage, sulfites possibles si charcuterie. Glaces : certains parfums contiennent des fruits à coque (chocolat noisette) ou de l'arachide (cacahuète). Pour toute allergie ou intolérance, merci de nous consulter avant de commander.</div>
 </section>
-</div></div>""", overlay=True)
+</div></div>""", home=True)
 
 # ---------------------------------------------------------------- Pages intérieures : helpers de style
 def head(title, sub="", img=None, alt="", kicker="", when="", pos=50):
@@ -290,7 +292,7 @@ page("sur-place-groupes.html", "Sur place, entreprises & groupes — Pizza du Ra
 <p class="muted">Sous les poutres et les murs en pierre de la pizzeria, notre salle accueille aussi bien un déjeuner sur le pouce qu'une réunion d'équipe ou un match à regarder ensemble — avec les pizzas qui sortent du four à côté.</p></section>
 
 <section class="wrap tight stack">
-<article class="row reveal">{ph('tables-vertes-dessus', alt="Deux pizzas sur une table de la terrasse")}<div><p class="eyebrow">Manger sur place</p><h2>À table, en salle ou en terrasse</h2>
+<article class="row reveal">{ph('pizza-burrata-terrasse', alt="Pizzas et boissons sur une table de la terrasse")}<div><p class="eyebrow">Manger sur place</p><h2>À table, en salle ou en terrasse</h2>
 <p>Seul, en famille, entre collègues ou entre amis : installez-vous en salle ou, aux beaux jours, sur la terrasse de la cour. Service en libre-service, pizzas tout juste sorties du four.</p>
 <p><strong>Lun, mar, jeu, ven</strong> 11h–14h · 18h–21h<br><strong>Dimanche</strong> 18h–21h</p><a class="more" href="la-carte.html">Voir la carte</a></div></article>
 <article class="row flip reveal">{ph('salle-grand-ecran', alt="Le grand écran de la salle, les poutres et les murs en pierre")}<div><p class="eyebrow">Se réunir</p><h2>Un grand écran pour vos contenus</h2>

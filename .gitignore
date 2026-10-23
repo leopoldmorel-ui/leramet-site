@@ -4,3 +4,4 @@ photos/
 .DS_Store
 __pycache__/
 choix-photo-*.jpg
+_dev.py
