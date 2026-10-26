@@ -536,3 +536,13 @@ main{background:var(--beige)}
 .c-hours b{color:var(--gold);font-weight:600}
 .ph img[src*="terrasse-soiree-clients"]{object-position:center 55%}
 .row .ph img[src*="pizza-burrata-terrasse"]{object-position:center 45%}
+.hero-golf{place-items:center!important}.hero-golf .inner{padding-top:0!important}
+.hero-golf .ph::after{display:none}
+.hero-center{place-items:center!important}.hero-center .inner{padding-top:0!important}
+/* Grands visuels : boutons toujours empilés les uns sous les autres */
+.hero .actions{flex-direction:column;align-items:center}
+.hero .actions .btn{min-width:min(320px,80vw)}
+/* espace entre deux rubriques successives de l'ardoise (Vins → Bières, etc.) */
+.carte-c ul + h2,.carte-c ul + p + h2{margin-top:40px}
+/* pas de pointillé sous la dernière ligne d'une rubrique : seule la ligne du titre sépare les sections */
+.carte-c li:last-child{border-bottom:0}

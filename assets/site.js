@@ -33,15 +33,6 @@ if (count) {
   tick(); setInterval(tick, 30000);
 }
 
-// Formulaires "me prévenir" : ouvrent un e-mail prérempli (pas de serveur nécessaire)
-document.querySelectorAll('form[data-subject]').forEach(f => f.addEventListener('submit', e => {
-  e.preventDefault();
-  const mail = f.querySelector('input[type=email]').value;
-  location.href = 'mailto:emmanuelle.morel@leramet.fr?subject=' + encodeURIComponent(f.dataset.subject) +
-    '&body=' + encodeURIComponent('Bonjour,\n\nMerci de me prévenir à cette adresse : ' + mail + '\n');
-  f.innerHTML = '<p>Merci ! Votre messagerie s\'ouvre pour envoyer la demande.</p>';
-}));
-
 // La carte : onglet actif selon la section visible
 const tabs = document.querySelectorAll('.menu-nav a');
 if (tabs.length) {

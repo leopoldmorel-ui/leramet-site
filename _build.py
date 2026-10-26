@@ -17,9 +17,9 @@ MAPS = "https://www.google.com/maps/search/?api=1&query=56+rue+Maurice+Ravel+171
 NAV = [
     ("index.html", "Accueil"),
     ("la-carte.html", "La pizzeria"),
-    ("sur-place-groupes.html", "Sur place & groupes"),
+    ("sur-place-groupes.html", "Séminaires & salle de réunion"),
     ("golf.html", 'Simulateur de Golf <span class="badge">Déc.</span>'),
-    ("gites.html", 'Gîtes <span class="badge">2027</span>'),
+    ("gites.html", 'Gîtes & Chambres d\'hôtes <span class="badge">2027</span>'),
     ("ancrage-local.html", "Ancrage local"),
     ("contact.html", "Contact"),
 ]
@@ -38,6 +38,22 @@ def ph(img=None, label="Photo", alt="", eager=False):
     return f'<div class="ph" data-label="{label}"><img src="{pic(img)}" alt="{alt}" {load}></div>'
 
 
+HERO_IMG = {"index.html": "terrasse-pizza-batisse", "la-carte.html": "comptoir-four", "sur-place-groupes.html": "salle-tables-vertes", "contact.html": "facade-longere"}
+
+
+def top_tint(file):
+    """Couleur de la zone d'état iPhone = haut de la photo d'accueil (sous le voile vert), pour un raccord sans bande."""
+    img = HERO_IMG.get(file)
+    if not img:
+        return ""
+    from PIL import Image
+    im = Image.open(ROOT / "img" / f"{img}.jpg").convert("RGB")
+    w, h = im.size
+    r, g, b = im.crop((0, 0, w, int(h * .04))).resize((1, 1)).getpixel((0, 0))
+    c = "#%02x%02x%02x" % tuple(int(x * .4 + y * .6) for x, y in zip((r, g, b), (36, 58, 55)))
+    return f'<meta name="theme-color" content="{c}"><style>html,body{{background:{c}!important}}</style>'
+
+
 def page(file, title, desc, body, home=False, overlay=False):
     links = "".join(
         f'<a href="{h}"{ACTIVE if h == file else ""}>{t}</a>' for h, t in NAV[1:]
@@ -52,7 +68,7 @@ def page(file, title, desc, body, home=False, overlay=False):
 <header class="site-header">
 <a class="brand" href="index.html"><img src="assets/logo/icon-120.png" alt="">Le Ramet</a>
 <button class="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span><span></span></button>
-<nav class="main-nav" id="nav">{links}<a class="btn btn-gold" href="tel:{TEL}">Commander</a></nav>
+<nav class="main-nav" id="nav">{links}<a class="btn btn-gold" href="tel:{TEL}">Appeler</a></nav>
 </header>
 <main>
 {body}
@@ -61,7 +77,7 @@ def page(file, title, desc, body, home=False, overlay=False):
 <div><img src="assets/logo/logo-v-beige-520.png" alt="Le Ramet — gîtes, chambres d'hôtes, séminaires et restauration"></div>
 <div><h4>Nous trouver</h4><p><a href="{MAPS}" target="_blank" rel="noopener" class="addr-link">56 rue Maurice Ravel<br>17100 Les Gonds</a></p><p><a href="tel:{TEL}" class="addr-link">{TEL_TXT}</a><br><a href="mailto:{MAIL}" class="addr-link">{MAIL}</a></p></div>
 <div><h4>Pizzeria</h4><p>Lun, mar, jeu, ven<br>11h–14h · 18h–21h</p><p>Dimanche 18h–21h<br>Fermé mercredi et samedi</p></div>
-<div><h4>Le Ramet</h4><p><a href="la-carte.html">La carte</a><br><a href="sur-place-groupes.html">Sur place & groupes</a><br><a href="golf.html">Golf</a><br><a href="gites.html">Gîtes & chambres d'hôtes</a><br><a href="contact.html">Contact & accès</a></p>
+<div><h4>Le Ramet</h4><p><a href="la-carte.html">La pizzeria</a><br><a href="sur-place-groupes.html">Séminaires & salle de réunion</a><br><a href="golf.html">Simulateur de golf</a><br><a href="gites.html">Gîtes & Chambres d'hôtes</a><br><a href="contact.html">Contact & accès</a><br><a href="ancrage-local.html">Ancrage local</a></p>
 <p><a href="https://www.instagram.com/domaine.du.ramet/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=100063968103180" target="_blank" rel="noopener">Facebook</a></p></div>
 </div><div class="legal">© Le Ramet · <a href="mentions-legales.html">Mentions légales & confidentialité</a></div></footer>
 <nav class="mobile-bar" aria-label="Actions rapides"><a href="tel:{TEL}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><span>Appeler</span></a><a href="la-carte.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>La carte</span></a><a href="{MAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>Itinéraire</span></a></nav>
@@ -119,7 +135,7 @@ ROAD = """<div class="road reveal">
 
 
 # ---------------------------------------------------------------- Accueil
-page("index.html", "Le Ramet — Pizzeria aux Gonds près de Saintes, golf indoor & réunions",
+page("index.html", "Le Ramet — Pizzeria, séminaires et simulateur de golf aux Gonds, près de Saintes",
      "Pizza du Ramet aux Gonds, près de Saintes : pizzas à emporter et sur place, salle pour réunions et repas d'équipe, simulateur de golf dès décembre.",
      f"""<section class="hero">{ph('terrasse-pizza-batisse', alt="Une pizza devant la bâtisse en pierre du Ramet", eager=True)}
 <div class="inner"><h1 class="hero-logo"><img src="assets/logo/logo-hero-beige.png" alt="Le Ramet — gîtes & chambres d'hôtes, séminaires & restauration" width="1100" height="923"></h1>
@@ -135,11 +151,11 @@ page("index.html", "Le Ramet — Pizzeria aux Gonds près de Saintes, golf indoo
 <p>Pizzas base tomate ou base crème, une pizza du moment chaque semaine, à emporter ou à déguster sur place.</p>
 <p><strong>Lun, mar, jeu, ven</strong> 11h–14h · 18h–21h<br><strong>Dimanche</strong> 18h–21h</p><a class="more" href="la-carte.html">Voir la carte</a></div></article>
 <article class="row flip reveal">{ph("salle-tables-vertes", alt="La salle de la pizzeria avec son grand écran, ses poutres et ses murs en pierre")}<div><p class="eyebrow">Se réunir · dès aujourd'hui</p><h2>Réunions & repas d'équipe</h2>
-<p>Notre salle de 16 places, équipée d'un grand écran, accueille vos réunions informelles, présentations et repas d'équipe, pizzas comprises.</p><a class="more" href="sur-place-groupes.html">Sur place & groupes</a></div></article>
+<p>Notre salle de 16 places, équipée d'un grand écran, accueille vos réunions informelles, présentations et repas d'équipe, pizzas comprises.</p><a class="more" href="sur-place-groupes.html">Séminaires & salle de réunion</a></div></article>
 </section>
 
 <section class="band"><div class="wrap split reveal"><div><span class="badge">Ouverture début décembre</span><h2 style="margin-top:18px">Le golf s'invite au Ramet</h2>
-<p>Un simulateur de golf s'installe au Ramet mi-novembre et ouvre début décembre. Jouez sur des parcours du monde entier, travaillez votre swing, ou partagez une partie entre amis — pizza à la main.</p>
+<p>Un simulateur de golf ouvre au Ramet début décembre. Jouez sur des parcours du monde entier, travaillez votre swing, ou partagez une partie entre amis — pizza à la main.</p>
 <ul class="ticks"><li>Parcours virtuels & practice</li><li>Soirées entre amis, anniversaires</li><li>Team building pour les entreprises</li><li>Formule golf + pizza</li></ul>
 <a class="btn btn-gold" href="golf.html">Découvrir le simulateur</a></div>{ph(label="Visuel à venir : le simulateur de golf")}</div></section>
 
@@ -275,17 +291,11 @@ def slate(title, lines, intro="", foot=""):
     return f'<div class="slate reveal"><div class="frame">{t}{i}{"".join(out)}{f}</div></div>'
 
 
-def notify(title, intro, subject):
-    form = (f'<form data-subject="{subject}"><input type="email" required placeholder="Votre adresse e-mail" aria-label="Votre adresse e-mail">'
-            '<button class="btn btn-gold">Me prévenir</button></form>')
-    return slate(title, [], intro=intro, foot=form)
-
-
 # ---------------------------------------------------------------- Sur place & groupes (même construction que l'accueil)
-page("sur-place-groupes.html", "Sur place, entreprises & groupes — Pizza du Ramet",
-     "Manger sur place à Pizza du Ramet (16 places) et organiser réunions, repas d'équipe ou projections dans une salle équipée d'un grand écran.",
+page("sur-place-groupes.html", "Séminaires & salle de réunion — Le Ramet",
+     "Séminaires et salle de réunion au Ramet (16 places, grand écran) : réunions, repas d'équipe et projections, pizzas comprises.",
      f"""<section class="hero">{ph('salle-tables-vertes', alt="La salle de la pizzeria, ses poutres et son grand écran", eager=True)}
-<div class="inner"><p class="sub">16 places assises · grand écran · pizzas comprises</p><h1 class="hero-title">Sur place<br>& groupes</h1>
+<div class="inner"><p class="sub">16 places assises · grand écran · pizzas comprises</p><h1 class="hero-title">Séminaires<br>& salle de réunion</h1>
 <div class="actions"><a class="btn btn-gold" href="#venue">Organiser une venue</a><a class="btn btn-outline" href="tel:{TEL}">Appeler · {TEL_TXT}</a></div></div></section>
 
 <section class="wrap center reveal"><h2>Une salle simple, chaleureuse et équipée</h2>
@@ -320,60 +330,100 @@ page("sur-place-groupes.html", "Sur place, entreprises & groupes — Pizza du Ra
 <h2>Le goût local, l'esprit convivial</h2></section>
 """, home=True)
 
-# ---------------------------------------------------------------- Golf (page ardoise)
+# ---------------------------------------------------------------- Golf (même construction que l'accueil)
 page("golf.html", "Simulateur de golf — Le Ramet, Les Gonds près de Saintes",
      "Simulateur de golf indoor au Ramet, Les Gonds près de Saintes : parcours virtuels, practice, soirées entre amis et team building. Ouverture début décembre 2026.",
-     f"""<div class="page-slate">{head("Le golf s'invite au Ramet", "Un simulateur de golf indoor aux Gonds, à 5 minutes de Saintes. Parcours du monde entier, practice et défis entre amis — été comme hiver.",
-          kicker="Simulateur de golf", when="Ouverture début décembre 2026")}
-<section class="wrap">{slate("L'expérience", [
-        ("Parcours virtuels", "9 ou 18 trous", "Jouez sur des parcours célèbres. [Nombre de parcours à préciser]"),
-        ("Practice & analyse", "chaque coup", "Vitesse de balle, distance, trajectoire : progressez coup après coup."),
-        ("Jeux & défis", "à plusieurs", "Concours d'approche, plus long drive : idéal même sans être golfeur."),
-    ], intro="Débutant curieux ou golfeur confirmé, chacun y trouve son jeu.")}</section>
+     f"""<section class="hero hero-golf"><div class="ph" data-label=""></div>
+<div class="inner"><p class="sub">Ouverture début décembre 2026</p><h1 class="hero-title">Simulateur<br>de golf</h1>
+<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Appeler · {TEL_TXT}</a><a class="btn btn-outline" href="#formules">Voir les formules</a></div></div></section>
+
+<section class="wrap center reveal"><h2>Le golf s'invite au Ramet</h2>
+<p class="muted">Un simulateur de golf indoor aux Gonds, à 5 minutes de Saintes. Parcours du monde entier, practice et défis entre amis — été comme hiver, et une pizza en sortant du green.</p></section>
+
+<section class="wrap tight stack">
+<article class="row reveal">{ph(label="Photo du simulateur à venir")}<div><p class="eyebrow">Jouer</p><h2>Parcours mythiques & practice</h2>
+<p>Jouez 9 ou 18 trous sur des parcours célèbres, travaillez votre swing grâce aux données de chaque coup (vitesse, distance, trajectoire), ou lancez des défis : plus long drive, concours d'approche.</p>
+<p class="muted">Débutant curieux ou golfeur confirmé, clubs disponibles à la location.</p></div></article>
+
+</section>
+
 <section class="wrap tight" id="formules">{slate("Les formules", [
-        ("Partie libre", "[–] € / h", "Location du simulateur à l'heure · jusqu'à [x] joueurs · clubs fournis."),
-        ("Golf & Pizza", "[–] € / pers.", "Session de golf entre amis, pizza du Ramet et boisson · anniversaires, EVG/EVJF."),
-        ("Entreprises", "sur devis", "Team building et tournoi interne, salle avec grand écran, repas pizza.", f"mailto:{MAIL}?subject=Golf%20entreprise"),
-    ], intro="Tarifs communiqués à l'ouverture.")}</section>
-<section class="wrap"><div class="row reveal">{ph('tables-vertes-duo', alt="Deux pizzas en terrasse")}<div><h2>Jouez, puis passez à table</h2>
-<p>Enchaînez une partie de golf et un repas à la pizzeria, dans la même maison. À l'été 2027, vous pourrez aussi dormir sur place dans nos gîtes et chambres d'hôtes.</p>
-<ol class="num-steps"><li>Réservez votre créneau de golf</li><li>Commandez vos pizzas pour l'après-partie</li><li>Profitez de la salle et de la terrasse</li></ol></div></div></section>
+        ("Partie libre", "à l'heure", "Location du simulateur, jusqu'à 6 joueurs, clubs en location."),
+        ("Golf & Pizza", "entre amis", "Une session de golf, puis pizza et boisson."),
+        ("Soirée golf", "en soirée", "Une soirée entre amis ou en famille, golf et pizzas pour tout le groupe, sur réservation."),
+        ("Entreprises", "sur devis", "Team building et tournoi interne, repas dans la salle.", f"mailto:{MAIL}?subject=Golf%20entreprise"),
+    ], intro="Tarifs communiqués à l'ouverture", foot=f'<a href="mailto:{MAIL}?subject=Golf%20au%20Ramet">Demander un devis</a>')}</section>
+
+<section class="wrap stack">
+<article class="row reveal">{ph('tables-vertes-duo', alt="Deux pizzas sur une table de la terrasse")}<div><p class="eyebrow">Golf & pizza</p><h2>Jouez, puis passez à table</h2>
+<p>Enchaînez une partie et un repas à la pizzeria, dans la même maison. À l'été 2027, vous pourrez aussi dormir sur place.</p><a class="more" href="la-carte.html">Voir la carte</a></div></article>
+</section>
+
 <section class="wrap tight"><h2 class="sec-title">Questions fréquentes</h2><div class="faq">
 <details><summary>Faut-il savoir jouer au golf ?</summary><p>Non, le simulateur convient aux débutants comme aux confirmés. Les jeux et défis sont accessibles à tous.</p></details>
-<details><summary>Le matériel est-il fourni ?</summary><p>Oui, clubs et balles sont fournis. Vous pouvez aussi venir avec vos propres clubs.</p></details>
-<details><summary>Combien de joueurs par session ?</summary><p>[À préciser selon le simulateur — généralement jusqu'à 4 à 6 joueurs.]</p></details>
-<details><summary>Comment réserver ?</summary><p>À l'ouverture, par téléphone au {TEL_TXT} [ou en ligne — module de réservation à brancher].</p></details>
+<details><summary>Le matériel est-il fourni ?</summary><p>Les clubs sont disponibles à la location, et vous pouvez aussi venir avec les vôtres. Les balles sont obligatoirement fournies par le Ramet.</p></details>
+<details><summary>Combien de joueurs par session ?</summary><p>Jusqu'à 6 joueurs par session.</p></details>
+<details><summary>Comment réserver ?</summary><p>À l'ouverture, par téléphone au {TEL_TXT}.</p></details>
 </div></section>
-<section class="wrap tight" id="prevenir" style="padding-bottom:clamp(56px,8vw,110px)">{notify("Prévenez-moi de l'ouverture", "Recevez la date d'ouverture et l'offre de lancement.", "Prévenez-moi : ouverture du golf")}</section></div>""")
+
+
+<section class="wrap tight center reveal"><img src="assets/logo/logo-v-vert-520.png" alt="" style="height:130px;width:auto;margin:0 auto 24px">
+<h2>Le goût local, l'esprit convivial</h2></section>
+""", home=True)
 
 # ---------------------------------------------------------------- Gîtes (été 2027)
-page("gites.html", "Gîtes & chambres d'hôtes — Le Ramet, ouverture été 2027",
-     "Le Ramet ouvre ses gîtes et chambres d'hôtes aux Gonds, près de Saintes, à l'été 2027. Soyez informé de l'ouverture.",
-     head("Gîtes & chambres d'hôtes", "Bientôt, vous pourrez séjourner au Ramet : au calme, au cœur de la Saintonge, avec la pizzeria et le golf sur place.",
-          "facade-batisse", "La bâtisse et la longère du Ramet", kicker="Le domaine du Ramet", when="Ouverture été 2027", pos=55)
-     + f"""<section class="wrap">{slate("En préparation", [
-        ("Les gîtes", "familles & amis", "Pour les séjours en famille ou entre amis. Capacités et équipements bientôt en ligne."),
-        ("Les chambres d'hôtes", "une nuit, un week-end", "Avec petit-déjeuner. Détails et tarifs bientôt en ligne."),
-        ("Les séminaires", "entreprises", "Réunion, repas et hébergement sur place."),
-    ], intro="Photos, capacités et tarifs seront publiés ici à l'approche de l'ouverture.")}</section>
-<section class="wrap tight"><div class="row reveal">{ph('facade-longere', alt="La longère du Ramet")}<div><h2>Dormir, savourer, jouer</h2>
-<p class="muted">Nos hôtes auront la pizzeria à quelques pas et le simulateur de golf sous le même toit. En attendant, venez déjà nous rendre visite !</p>
-<div class="u-links"><a href="la-carte.html">Voir la carte</a><a href="golf.html">Le simulateur de golf</a></div></div></div></section>
-<section class="wrap tight" style="padding-bottom:clamp(56px,8vw,110px)">{notify("Être informé de l'ouverture", "Laissez votre e-mail, nous vous préviendrons dès l'ouverture des réservations.", "Prévenez-moi : ouverture des gîtes")}</section>""")
+page("gites.html", "Gîtes & Chambres d'hôtes — Le Ramet, ouverture été 2027",
+     "Le Ramet ouvre ses gîtes et chambres d'hôtes aux Gonds, près de Saintes, à l'été 2027.",
+     f"""<section class="hero hero-center">{ph('facade-batisse', alt="La bâtisse et la longère du Ramet", eager=True)}
+<div class="inner"><p class="sub">Ouverture été 2027</p><h1 class="hero-title">Gîtes &<br>Chambres d'hôtes</h1>
+<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Appeler · {TEL_TXT}</a><a class="btn btn-outline" href="mailto:{MAIL}?subject=G%C3%AEtes%20%C3%A9t%C3%A9%202027">Être informé par e-mail</a></div></div></section>
+
+<section class="wrap center reveal"><h2>Un domaine pour se poser</h2>
+<p class="muted">Bientôt, vous pourrez séjourner au Ramet : au calme, au cœur de la Saintonge, avec la pizzeria et le golf sur place. Photos, capacités et tarifs seront publiés ici à l'approche de l'ouverture.</p></section>
+
+<section class="wrap tight">{slate("En préparation", [
+        ("Les gîtes", "familles & amis", "Pour les séjours en famille ou entre amis."),
+        ("Les chambres d'hôtes", "une nuit, un week-end", "Avec petit-déjeuner."),
+        ("Les séminaires", "entreprises", "Réunion, repas et hébergement sur place.", "sur-place-groupes.html"),
+    ])}</section>
+
+<section class="wrap stack">
+<article class="row reveal">{ph('facade-longere', alt="La longère du Ramet")}<div><p class="eyebrow">Tout sur place</p><h2>Dormir, savourer, jouer</h2>
+<p>Nos hôtes auront la pizzeria à quelques pas et le simulateur de golf sous le même toit. En attendant, venez déjà nous rendre visite !</p>
+<div class="u-links"><a href="la-carte.html">La pizzeria</a><a href="golf.html">Simulateur de golf</a></div></div></article>
+</section>
+
+<section class="wrap tight center reveal"><img src="assets/logo/logo-v-vert-520.png" alt="" style="height:130px;width:auto;margin:0 auto 24px">
+<h2>Le goût local, l'esprit convivial</h2></section>
+""", home=True)
 
 # ---------------------------------------------------------------- Ancrage local
 page("ancrage-local.html", "Ancrage local — Pizza du Ramet et la Minoterie Méchain",
      "Pizza du Ramet travaille une farine locale de la Minoterie Méchain à Courcelles : une pizzeria ancrée dans son territoire.",
-     head("Ancrage local", "Aux Gonds, Pizza du Ramet fait le choix de la proximité, du bon sens et des savoir-faire locaux.",
-          "preparation", "Préparation des pizzas", kicker="Du territoire à votre assiette", pos=58)
-     + f"""<section class="wrap stack">
-<article class="row reveal">{ph('cuisine-four', alt="En cuisine devant le four")}<div><h2>La Minoterie Méchain, à Courcelles</h2>
-<p>Pour réaliser nos pâtes, nous avons choisi une farine issue de la Minoterie Méchain, située à Courcelles, à proximité de notre pizzeria.</p>
-<p class="muted">Ce choix reflète notre volonté de proposer des pizzas ancrées dans notre territoire, en privilégiant des partenaires proches lorsque cela est possible.</p></div></article>
-<article class="row flip reveal">{ph('four-cuisson', alt="Pizzas en cuisson dans le four")}<div><h2>Proche de nos clients et de nos fournisseurs</h2>
-<p>Notre ambition : construire une pizzeria proche de ses clients, de ses fournisseurs et de son environnement.</p></div></article>
+     f"""<section class="hero hero-center">{ph('preparation', alt="Préparation des pizzas", eager=True)}
+<div class="inner"><p class="sub">Du territoire à votre assiette</p><h1 class="hero-title">Ancrage<br>local</h1>
+<div class="actions"><a class="btn btn-gold" href="la-carte.html">Voir la carte</a><a class="btn btn-outline" href="tel:{TEL}">Commander · {TEL_TXT}</a></div></div></section>
+
+<section class="wrap center reveal"><h2>Le goût du coin</h2>
+<p class="muted">Aux Gonds, Pizza du Ramet fait le choix de la proximité, du bon sens et des savoir-faire locaux, en travaillant avec des partenaires proches dès que possible.</p></section>
+
+<section class="wrap tight stack">
+<article class="row reveal">{ph('cuisine-four', alt="En cuisine devant le four")}<div><p class="eyebrow">La farine</p><h2>La Minoterie Méchain, à Courcelles</h2>
+<p>Pour réaliser nos pâtes, nous avons choisi une farine issue de la Minoterie Méchain, à quelques kilomètres de la pizzeria.</p></div></article>
+<article class="row reveal">{ph('four-cuisson', alt="Pizzas en cuisson dans le four")}<div><p class="eyebrow">Les glaces</p><h2>L'Angélys, glacier charentais</h2>
+<p>Pour le dessert, des glaces artisanales de Charente-Maritime : chocolat noisette, mangue, framboise, vanille, cacahuète.</p><a class="more" href="la-carte.html">Voir la carte</a></div></article>
 </section>
-<section class="wrap tight" style="padding-bottom:clamp(56px,8vw,110px)"><div class="stamp reveal"><span>Proximité</span><span>Savoir-faire local</span><span>Authenticité</span><span>Soutien au tissu local</span></div></section>""")
+
+<section class="wrap tight">{slate("Nos engagements", [
+        ("Proximité", "partenaires locaux"),
+        ("Savoir-faire", "pâte faite maison"),
+        ("Authenticité", "recettes simples"),
+        ("Tissu local", "Saintonge"),
+    ])}</section>
+
+<section class="wrap tight center reveal"><img src="assets/logo/logo-v-vert-520.png" alt="" style="height:130px;width:auto;margin:0 auto 24px">
+<h2>Le goût local, l'esprit convivial</h2></section>
+""", home=True)
 
 # ---------------------------------------------------------------- Contact
 HOURS = [(1, "Lundi", "11h – 14h · 18h – 21h"), (2, "Mardi", "11h – 14h · 18h – 21h"), (3, "Mercredi", "fermé"),
@@ -384,24 +434,36 @@ hours_lines = "".join(
     for d, n, h in HOURS)
 page("contact.html", "Contact & accès — Pizza du Ramet, Les Gonds",
      "Contact, horaires et accès de Pizza du Ramet, 56 rue Maurice Ravel, 17100 Les Gonds. Commandes par téléphone au 06 13 45 70 56.",
-     head("Contact & accès", "Pour vos pizzas à emporter ou à déguster sur place, vos réunions et vos questions sur le golf et les gîtes.",
-          "facade-longere", "La longère du Ramet", kicker="Retrouvez-nous aux Gonds", pos=60)
-     + f"""<section class="wrap">{slate("Nous joindre", [
+     f"""<section class="hero hero-center">{ph('facade-longere', alt="La longère du Ramet", eager=True)}
+<div class="inner"><p class="sub">56 rue Maurice Ravel · Les Gonds</p><h1 class="hero-title">Contact<br>& accès</h1>
+<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Appeler · {TEL_TXT}</a><a class="btn btn-outline" href="{MAPS}" target="_blank" rel="noopener">Itinéraire</a></div></div></section>
+
+<section class="wrap center reveal"><h2>Retrouvez-nous aux Gonds</h2>
+<p class="muted">À cinq minutes de Saintes. Pour vos pizzas à emporter ou sur place, vos réunions, et vos questions sur le golf et les gîtes.</p></section>
+
+<section class="wrap tight">{slate("Nous joindre", [
         ("Adresse", "56 rue Maurice Ravel, Les Gonds", "", MAPS),
         ("Téléphone", TEL_TXT, "", f"tel:{TEL}"),
         ("E-mail", MAIL, "", f"mailto:{MAIL}"),
         ("Paiement", "carte ou espèces"),
     ], intro="Commandes par téléphone ou sur place")}</section>
-<section class="wrap tight"><div class="row reveal" style="align-items:center"><div><div class="slate hours-lines"><div class="frame"><h2>Horaires</h2><p class="intro">Pizzeria</p>{hours_lines}</div></div></div>
-<div class="polaroid"><iframe class="map" title="Plan d'accès Pizza du Ramet" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=56+rue+Maurice+Ravel,+17100+Les+Gonds&output=embed"></iframe></div></div>
-<div class="u-links c"><a href="tel:{TEL}">Appeler</a><a href="{MAPS}" target="_blank" rel="noopener">Itinéraire</a></div></section>""")
+
+<section class="wrap stack">
+<article class="row reveal"><div class="polaroid"><iframe class="map" title="Plan d'accès Pizza du Ramet" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=56+rue+Maurice+Ravel,+17100+Les+Gonds&output=embed"></iframe></div>
+<div><div class="slate hours-lines"><div class="frame"><h2>Horaires</h2><p class="intro">Pizzeria</p>{hours_lines}</div></div>
+<div class="u-links"><a href="tel:{TEL}">Appeler</a><a href="{MAPS}" target="_blank" rel="noopener">Itinéraire</a></div></div></article>
+</section>
+
+<section class="wrap tight center reveal"><img src="assets/logo/logo-v-vert-520.png" alt="" style="height:130px;width:auto;margin:0 auto 24px">
+<h2>Le goût local, l'esprit convivial</h2></section>
+""", home=True)
 
 # ---------------------------------------------------------------- Mentions légales
 page("mentions-legales.html", "Mentions légales — Le Ramet", "Mentions légales et données personnelles du site leramet.fr.",
      head("Mentions légales", "Informations légales du site www.leramet.fr.", kicker="Informations légales")
      + f"""<section class="wrap prose">
 <h2>Éditeur du site</h2><p>Le présent site est édité par Pizza du Ramet / Le Ramet, 56 rue Maurice Ravel, 17100 Les Gonds, France. Téléphone : {TEL_TXT} — E-mail : {MAIL}.</p>
-<p>Raison sociale : SARL LE RAMET — Forme juridique : SARL — Capital social : 450 000 € — SIRET : 890 663 974 00024 — RCS : Saintes 890 663 974 — Responsable de publication : information à compléter.</p>
+<p>Raison sociale : SARL LE RAMET — Forme juridique : SARL — Capital social : 450 000 € — SIRET : 890 663 974 00024 — RCS : Saintes 890 663 974 — Responsable de publication : Emmanuelle Morel, gérante.</p>
 <h2>Hébergement</h2><p>Le site est hébergé par OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — www.ovhcloud.com.</p>
 <h2>Propriété intellectuelle</h2><p>L'ensemble des contenus présents sur le site (textes, images, graphismes, logo, icônes, photographies, illustrations, structure générale) sont la propriété exclusive de leur auteur ou font l'objet d'une autorisation d'utilisation. Toute reproduction ou exploitation non autorisée est interdite.</p>
 <h2 id="donnees">Données personnelles</h2><p>Les informations transmises par e-mail ou téléphone sont destinées exclusivement à Pizza du Ramet afin de répondre aux demandes des utilisateurs. Aucune donnée personnelle n'est cédée, vendue ou transmise à des tiers à des fins commerciales.</p>
