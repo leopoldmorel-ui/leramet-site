@@ -376,7 +376,7 @@ page("gites.html", "Gîtes & Chambres d'hôtes — Le Ramet, ouverture été 202
      "Le Ramet ouvre ses gîtes et chambres d'hôtes aux Gonds, près de Saintes, à l'été 2027.",
      f"""<section class="hero hero-center">{ph('facade-batisse', alt="La bâtisse et la longère du Ramet", eager=True)}
 <div class="inner"><p class="sub">Ouverture été 2027</p><h1 class="hero-title">Gîtes &<br>Chambres d'hôtes</h1>
-<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Appeler · {TEL_TXT}</a><a class="btn btn-outline" href="mailto:{MAIL}?subject=G%C3%AEtes%20%C3%A9t%C3%A9%202027">Être informé par e-mail</a></div></div></section>
+<div class="actions"><a class="btn btn-gold" href="tel:{TEL}">Appeler · {TEL_TXT}</a></div></div></section>
 
 <section class="wrap center reveal"><h2>Un domaine pour se poser</h2>
 <p class="muted">Bientôt, vous pourrez séjourner au Ramet : au calme, au cœur de la Saintonge, avec la pizzeria et le golf sur place. Photos, capacités et tarifs seront publiés ici à l'approche de l'ouverture.</p></section>
